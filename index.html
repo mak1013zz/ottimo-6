@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cafe Ottimo | Authentic Cuisine in Peshawar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: #1a1a1a; background: #fff; }
+
+  nav { position: fixed; top: 0; width: 100%; background: rgba(10,8,5,0.96); backdrop-filter: blur(10px); z-index: 999; padding: 18px 5%; display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { font-family: 'Playfair Display', serif; color: #c9a84c; font-size: 22px; font-weight: 700; letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { color: #ccc; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .nav-links a:hover { color: #c9a84c; }
+  .nav-cta { background: #c9a84c; color: #000; padding: 9px 22px; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none; }
+  .nav-cta:hover { background: #b8943d; }
+
+  .hero { min-height: 100vh; background: linear-gradient(to bottom, rgba(10,8,5,0.7) 0%, rgba(10,8,5,0.5) 50%, rgba(10,8,5,0.85) 100%), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&q=80') center/cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 5%; }
+  .hero-content { max-width: 700px; }
+  .hero-badge { display: inline-block; border: 1px solid rgba(201,168,76,0.5); color: #c9a84c; font-size: 12px; font-weight: 500; padding: 6px 18px; border-radius: 20px; margin-bottom: 24px; letter-spacing: 2px; text-transform: uppercase; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px, 7vw, 80px); color: #fff; line-height: 1.1; margin-bottom: 20px; }
+  .hero h1 span { color: #c9a84c; }
+  .hero p { font-size: 17px; color: rgba(255,255,255,0.75); line-height: 1.8; margin-bottom: 36px; font-weight: 300; max-width: 560px; margin-left: auto; margin-right: auto; }
+  .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 52px; }
+  .btn-gold { background: #c9a84c; color: #000; padding: 14px 32px; border-radius: 8px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+  .btn-gold:hover { background: #b8943d; transform: translateY(-1px); }
+  .btn-outline { border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 14px 32px; border-radius: 8px; font-size: 15px; text-decoration: none; transition: all 0.2s; }
+  .btn-outline:hover { border-color: #c9a84c; color: #c9a84c; }
+  .hero-stats { display: flex; gap: 48px; justify-content: center; flex-wrap: wrap; padding-top: 36px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 30px; color: #c9a84c; font-weight: 700; }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+  section { padding: 90px 5%; }
+  .section-tag { font-size: 11px; font-weight: 600; color: #c9a84c; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 12px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(30px, 4vw, 46px); font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+  .section-sub { font-size: 16px; color: #666; line-height: 1.8; max-width: 540px; font-weight: 300; }
+  .center { text-align: center; }
+  .center .section-sub { margin: 0 auto; }
+
+  .about { background: #faf8f4; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; margin-top: 52px; }
+  .about-img { border-radius: 16px; overflow: hidden; height: 440px; }
+  .about-img img { width: 100%; height: 100%; object-fit: cover; }
+  .about-quote { background: #1a1a1a; border-radius: 12px; padding: 28px; margin-top: 28px; border-left: 3px solid #c9a84c; }
+  .about-quote p { font-family: 'Playfair Display', serif; font-size: 15px; color: #e0d5c0; line-height: 1.8; font-style: italic; }
+  .features { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .feature-tag { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); color: #a07c2a; font-size: 13px; padding: 7px 16px; border-radius: 20px; font-weight: 500; }
+
+  /* MENU TABS */
+  .menu { background: #fff; }
+  .menu-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin: 40px 0 32px; justify-content: center; }
+  .menu-tab { padding: 10px 22px; border-radius: 25px; border: 1px solid #ddd; font-size: 14px; cursor: pointer; color: #555; background: #fff; font-family: 'Inter', sans-serif; transition: all 0.2s; font-weight: 500; }
+  .menu-tab.active, .menu-tab:hover { background: #c9a84c; color: #000; border-color: #c9a84c; }
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; }
+  .menu-category { margin-bottom: 40px; }
+  .menu-category-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: #1a1a1a; border-bottom: 2px solid #c9a84c; padding-bottom: 10px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+  .menu-items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .menu-item { background: #faf8f4; border-radius: 10px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: flex-start; border: 1px solid #eee; transition: all 0.2s; }
+  .menu-item:hover { border-color: #c9a84c; background: #fff; }
+  .menu-item-name { font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+  .menu-item-desc { font-size: 12px; color: #888; line-height: 1.5; max-width: 200px; }
+  .menu-item-price { font-size: 14px; font-weight: 700; color: #c9a84c; white-space: nowrap; margin-left: 12px; flex-shrink: 0; }
+
+  /* DEALS */
+  .deals { background: #0d0b08; }
+  .deals .section-title { color: #fff; }
+  .deals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 48px; }
+  .deal-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.25); border-radius: 14px; padding: 28px 24px; transition: all 0.3s; }
+  .deal-card:hover { border-color: #c9a84c; background: rgba(201,168,76,0.05); }
+  .deal-badge { display: inline-block; background: #c9a84c; color: #000; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 12px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+  .deal-card h3 { font-family: 'Playfair Display', serif; font-size: 19px; color: #fff; margin-bottom: 10px; }
+  .deal-card p { font-size: 13px; color: #999; line-height: 1.7; margin-bottom: 14px; }
+  .deal-price { font-size: 22px; font-weight: 700; color: #c9a84c; }
+  .deal-original { font-size: 13px; color: #666; text-decoration: line-through; margin-left: 8px; }
+  .deal-time { font-size: 11px; color: #c9a84c; margin-top: 8px; letter-spacing: 0.5px; }
+
+  /* EXPERIENCE */
+  .experience { background: #faf8f4; }
+  .exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 52px; }
+  .exp-card { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 32px 24px; text-align: center; transition: all 0.3s; }
+  .exp-card:hover { border-color: #c9a84c; box-shadow: 0 8px 30px rgba(201,168,76,0.1); }
+  .exp-icon { font-size: 32px; margin-bottom: 16px; }
+  .exp-card h3 { font-family: 'Playfair Display', serif; font-size: 17px; margin-bottom: 10px; }
+  .exp-card p { font-size: 13px; color: #888; line-height: 1.7; }
+
+  /* REVIEWS */
+  .reviews { background: #fff; }
+  .ratings-row { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 40px; justify-content: center; }
+  .rating-box { text-align: center; background: #faf8f4; border: 1px solid #eee; border-radius: 12px; padding: 20px 32px; }
+  .rating-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: #c9a84c; }
+  .rating-src { font-size: 13px; color: #999; margin-top: 4px; }
+  .rating-votes { font-size: 11px; color: #bbb; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 40px; }
+  .review-card { background: #faf8f4; border-radius: 14px; padding: 28px; border: 1px solid #eee; }
+  .stars { color: #c9a84c; font-size: 16px; margin-bottom: 14px; }
+  .review-card p { font-size: 14px; color: #555; line-height: 1.8; font-style: italic; margin-bottom: 18px; }
+  .reviewer { display: flex; align-items: center; gap: 12px; }
+  .reviewer-avatar { width: 38px; height: 38px; border-radius: 50%; background: rgba(201,168,76,0.15); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; color: #a07c2a; }
+  .reviewer-name { font-size: 14px; font-weight: 600; }
+  .reviewer-source { font-size: 12px; color: #999; }
+
+  /* CONTACT */
+  .contact { background: #faf8f4; }
+  .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 52px; align-items: start; }
+  .info-card { background: #1a1a1a; border-radius: 14px; padding: 36px; }
+  .info-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 28px; }
+  .info-icon { width: 42px; height: 42px; background: rgba(201,168,76,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .info-item h4 { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .info-item p, .info-item a { font-size: 15px; color: #fff; text-decoration: none; }
+  .info-item a { color: #c9a84c; }
+  .social-row { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+  .social-btn { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); color: #c9a84c; padding: 8px 16px; border-radius: 6px; font-size: 13px; text-decoration: none; transition: all 0.2s; }
+  .social-btn:hover { background: rgba(201,168,76,0.2); }
+  .reservation-form { display: flex; flex-direction: column; gap: 14px; }
+  .reservation-form input, .reservation-form textarea, .reservation-form select { width: 100%; padding: 13px 16px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; transition: border 0.2s; color: #1a1a1a; background: #fff; }
+  .reservation-form input:focus, .reservation-form textarea:focus, .reservation-form select:focus { border-color: #c9a84c; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .reservation-form button { background: #c9a84c; color: #000; border: none; padding: 14px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.2s; }
+  .reservation-form button:hover { background: #b8943d; }
+
+  footer { background: #0a0805; color: #555; padding: 40px 5%; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+  .footer-logo { font-family: 'Playfair Display', serif; color: #c9a84c; font-size: 20px; }
+  footer p { font-size: 13px; }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { color: #555; text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer-links a:hover { color: #c9a84c; }
+
+  .wa-float { position: fixed; bottom: 28px; right: 28px; background: #25d366; color: #fff; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4); z-index: 999; transition: transform 0.2s; }
+  .wa-float:hover { transform: scale(1.1); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .about-grid, .contact-wrap { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 28px; }
+    .menu-tabs { gap: 8px; }
+    .menu-tab { padding: 8px 16px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Cafe Ottimo</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#deals">After Dark</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Reserve a Table</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">✦ Peshawar's Finest Dining</div>
+    <h1>Where Every Bite Tells a <span>Story</span></h1>
+    <p>Authentic cuisines and tantalising tastes crafted to make your dining experience joyful and truly memorable. Feel the luxury you've been waiting for.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-gold">Reserve a Table</a>
+      <a href="#menu" class="btn-outline">Explore Menu</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">4.9</div><div class="stat-label">Facebook rating</div></div>
+      <div><div class="stat-num">4.5</div><div class="stat-label">Foodpanda rating</div></div>
+      <div><div class="stat-num">4.2</div><div class="stat-label">Google rating</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="about">
+  <div class="about-grid">
+    <div>
+      <div class="section-tag">Our story</div>
+      <div class="section-title">Luxury Taste. Warm Hospitality.</div>
+      <p style="font-size:16px; color:#555; line-height:1.9; margin-bottom:24px; font-weight:300;">Nestled in the heart of Hayatabad, Cafe Ottimo was born from a passion to bring the world's authentic flavours to the people of Peshawar. Every dish we serve carries a promise — of quality, of taste, and of an experience you won't forget.</p>
+      <div class="about-quote">
+        <p>"In an effort to bring authentic cuisines and tantalising tastes for the people of Peshawar, we humbly present to you, Cafe Ottimo! We hope to make your dining experience joyful and memorable."</p>
+      </div>
+      <div class="features">
+        <span class="feature-tag">🍽️ All You Can Eat</span>
+        <span class="feature-tag">🌿 Vegan Options</span>
+        <span class="feature-tag">🌳 Outdoor Seating</span>
+        <span class="feature-tag">🌙 Open till 2am</span>
+        <span class="feature-tag">💰 Rs 1,000 – 4,000 per person</span>
+      </div>
+    </div>
+    <div>
+      <div class="about-img">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" alt="Cafe Ottimo dining" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FULL MENU -->
+<section id="menu" class="menu">
+  <div class="center">
+    <div class="section-tag">What we serve</div>
+    <div class="section-title">Our Full Menu</div>
+    <p class="section-sub">From breakfast to midnight — a world of flavours awaits you at Cafe Ottimo.</p>
+  </div>
+
+  <div class="menu-tabs">
+    <button class="menu-tab active" onclick="showMenu('breakfast')">🌅 Breakfast</button>
+    <button class="menu-tab" onclick="showMenu('soups')">🍲 Soups & Starters</button>
+    <button class="menu-tab" onclick="showMenu('mains')">🥩 Mains</button>
+    <button class="menu-tab" onclick="showMenu('burgers')">🍔 Burgers</button>
+    <button class="menu-tab" onclick="showMenu('pizza')">🍕 Pizza</button>
+    <button class="menu-tab" onclick="showMenu('pasta')">🍝 Pasta</button>
+    <button class="menu-tab" onclick="showMenu('chinese')">🥢 Chinese</button>
+    <button class="menu-tab" onclick="showMenu('desserts')">🍰 Desserts & Bar</button>
+    <button class="menu-tab" onclick="showMenu('kids')">👶 Kids Zone</button>
+  </div>
+
+  <!-- BREAKFAST -->
+  <div class="menu-panel active" id="panel-breakfast">
+    <div class="menu-category">
+      <div class="menu-category-title">☀️ Savoury Breakfast</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Scrambled Eggs</div></div><div class="menu-item-price">590 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Florentine Omelette</div><div class="menu-item-desc">Creamy omelette layered with cream cheese and spinach</div></div><div class="menu-item-price">690 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Jalapeño Cheese Omelette</div></div><div class="menu-item-price">690 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Marrakesh Sunrise Omelette</div></div><div class="menu-item-price">690 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Omelette Frittata</div></div><div class="menu-item-price">750 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Shakshuka</div></div><div class="menu-item-price">790 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chicken & Mushroom Omelette</div></div><div class="menu-item-price">900 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Signature Steak and Eggs</div></div><div class="menu-item-price">1,090 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Croissant Scrambled Egg & Chicken</div></div><div class="menu-item-price">950 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Croissant Chicken Sandwich</div></div><div class="menu-item-price">950 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Croissant Beef Sandwich</div></div><div class="menu-item-price">1,090 Rs</div></div>
+      </div>
+    </div>
+    <div class="menu-category">
+      <div class="menu-category-title">🧇 Sweet Breakfast</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Fruit Symphony Pancakes</div></div><div class="menu-item-price">750 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Jenga French Toast</div></div><div class="menu-item-price">790 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">La Crème Toast</div></div><div class="menu-item-price">790 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Cloudy Pancakes</div></div><div class="menu-item-price">950 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chocolate Overload Crêpes</div></div><div class="menu-item-price">990 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Rainbow Crêpes</div></div><div class="menu-item-price">990 Rs</div></div>
+      </div>
+    </div>
+    <div class="menu-category">
+      <div class="menu-category-title">🫓 Desi Breakfast</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Sunrise Eggs & Fruit</div></div><div class="menu-item-price">390 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Desi Scrambled Eggs</div></div><div class="menu-item-price">470 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Anda Paratha Wrap</div></div><div class="menu-item-price">470 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Pakistani Omelette</div></div><div class="menu-item-price">470 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Lahori Channay</div></div><div class="menu-item-price">400 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Desi Thali</div></div><div class="menu-item-price">790 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Skillet Qeema</div></div><div class="menu-item-price">850 Rs</div></div>
+      </div>
+    </div>
+    <div class="menu-category">
+      <div class="menu-category-title">🍳 Sides & Dips</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Single Egg</div></div><div class="menu-item-price">60 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Single Desi Egg</div></div><div class="menu-item-price">100 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chicken Sausage</div></div><div class="menu-item-price">100 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Beef Sausage</div></div><div class="menu-item-price">200 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Croissant</div></div><div class="menu-item-price">200 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Paratha</div></div><div class="menu-item-price">100 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Bread Slices</div></div><div class="menu-item-price">60 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Mix Fruit</div></div><div class="menu-item-price">100 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Sweet Chilli Potatoes</div></div><div class="menu-item-price">50 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Traditional Lassi</div></div><div class="menu-item-price">290 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Seasonal Fruit Juice</div></div><div class="menu-item-price">350 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Nutella</div></div><div class="menu-item-price">100 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Pancake Syrup</div></div><div class="menu-item-price">100 Rs</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOUPS & STARTERS -->
+  <div class="menu-panel" id="panel-soups">
+    <div class="menu-category">
+      <div class="menu-category-title">🍲 Soups</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Cream of Chicken</div></div><div class="menu-item-price">550 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Hot & Sour</div></div><div class="menu-item-price">550 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Cream of Mushroom</div></div><div class="menu-item-price">590 Rs</div></div>
+      </div>
+    </div>
+    <div class="menu-category">
+      <div class="menu-category-title">🧅 Small Plates</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Crispy Onion Rings</div></div><div class="menu-item-price">500 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Tacos</div></div><div class="menu-item-price">750 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Saucy Wings</div></div><div class="menu-item-price">720 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Cheese Sticks</div></div><div class="menu-item-price">800 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Nachos</div></div><div class="menu-item-price">750 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Cheesy Loaded Fries</div></div><div class="menu-item-price">840 Rs</div></div>
+      </div>
+    </div>
+    <div class="menu-category">
+      <div class="menu-category-title">🥗 Salads</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Caesar Salad</div></div><div class="menu-item-price">900 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Garden Green Salad</div></div><div class="menu-item-price">950 Rs</div></div>
+      </div>
+    </div>
+    <div class="menu-category">
+      <div class="menu-category-title">🥪 Sandwiches</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Club Sandwich</div></div><div class="menu-item-price">1,050 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Open Beef Sandwich</div></div><div class="menu-item-price">1,250 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Ottimo Special Sandwich</div></div><div class="menu-item-price">1,490 Rs</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAINS -->
+  <div class="menu-panel" id="panel-mains">
+    <div class="menu-category">
+      <div class="menu-category-title">🥩 Beef Steak</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Texas Barbecue</div></div><div class="menu-item-price">1,990 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">American Steak</div></div><div class="menu-item-price">2,160 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Spanish Latte</div></div><div class="menu-item-price">1,990 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Classic Shiitake Mushroom</div></div><div class="menu-item-price">2,160 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chardonnay</div></div><div class="menu-item-price">2,190 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Rib Eye</div></div><div class="menu-item-price">2,690 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Grilled Fillet Madallions</div></div><div class="menu-item-price">2,650 Rs</div></div>
+      </div>
+    </div>
+    <div class="menu-category">
+      <div class="menu-category-title">🍗 Grilled Chicken</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Mexican Steak</div></div><div class="menu-item-price">1,590 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Tarragon Butter</div></div><div class="menu-item-price">1,590 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Jalapeño Cheese</div></div><div class="menu-item-price">1,590 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Spicy Moroccan</div></div><div class="menu-item-price">1,790 Rs</div></div>
+      </div>
+    </div>
+    <div class="menu-category">
+      <div class="menu-category-title">🍗 Stuffed Chicken</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Cheesy Stuffed Chicken</div></div><div class="menu-item-price">1,200 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Mushroom Roulade</div></div><div class="menu-item-price">1,990 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Butter Stuffed Breast</div></div><div class="menu-item-price">1,990 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Marengo</div></div><div class="menu-item-price">1,790 Rs</div></div>
+      </div>
+    </div>
+    <div class="menu-category">
+      <div class="menu-category-title">🐟 From The Sea</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Finger Fish</div></div><div class="menu-item-price">1,390 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Classic Fish & Chips</div></div><div class="menu-item-price">1,790 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Dynamite Prawns</div></div><div class="menu-item-price">1,550 Rs</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BURGERS -->
+  <div class="menu-panel" id="panel-burgers">
+    <div class="menu-category">
+      <div class="menu-category-title">🍔 Burgers</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Crispy Butter Milk Chicken</div></div><div class="menu-item-price">990 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Texas BBQ</div></div><div class="menu-item-price">990 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Just Burger (Chicken)</div></div><div class="menu-item-price">850 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Just Burger (Beef)</div></div><div class="menu-item-price">950 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Signature Smash Beef</div></div><div class="menu-item-price">1,250 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Supreme Chicken</div></div><div class="menu-item-price">1,090 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Double Cheese Beef</div></div><div class="menu-item-price">1,250 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Jalapeño Melt Beef</div></div><div class="menu-item-price">1,250 Rs</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIZZA -->
+  <div class="menu-panel" id="panel-pizza">
+    <div class="menu-category">
+      <div class="menu-category-title">🍕 Pizza</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Chicken Tikka (Small)</div></div><div class="menu-item-price">990 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chicken Tikka (Medium)</div></div><div class="menu-item-price">1,090 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chicken Tikka (Large)</div></div><div class="menu-item-price">1,490 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Ottimo Special (Small)</div></div><div class="menu-item-price">990 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Ottimo Special (Medium)</div></div><div class="menu-item-price">1,090 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Ottimo Special (Large)</div></div><div class="menu-item-price">1,490 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Ottimo Special (XL)</div></div><div class="menu-item-price">2,190 Rs</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASTA -->
+  <div class="menu-panel" id="panel-pasta">
+    <div class="menu-category">
+      <div class="menu-category-title">🍝 Pasta</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Alfredo</div></div><div class="menu-item-price">1,250 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Fettuccine</div></div><div class="menu-item-price">1,250 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Baked Pasta</div></div><div class="menu-item-price">1,290 Rs</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHINESE -->
+  <div class="menu-panel" id="panel-chinese">
+    <div class="menu-category">
+      <div class="menu-category-title">🥢 Chinese</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Chowmein (Small)</div></div><div class="menu-item-price">1,050 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chowmein (Large)</div></div><div class="menu-item-price">1,250 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Thai Bangkok (Small)</div></div><div class="menu-item-price">1,360 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Thai Bangkok (Large)</div></div><div class="menu-item-price">1,590 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Thai Chili Noodles (Small)</div></div><div class="menu-item-price">1,150 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Thai Chili Noodles (Large)</div></div><div class="menu-item-price">1,350 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Thai Hot Basil (Small)</div></div><div class="menu-item-price">1,350 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Thai Hot Basil (Large)</div></div><div class="menu-item-price">1,550 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chilli Dry (Small)</div></div><div class="menu-item-price">1,350 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chilli Dry (Large)</div></div><div class="menu-item-price">1,550 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Jungle Beef (Large)</div></div><div class="menu-item-price">1,650 Rs</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESSERTS -->
+  <div class="menu-panel" id="panel-desserts">
+    <div class="menu-category">
+      <div class="menu-category-title">🍰 Desserts</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Caramel Bread Pudding</div></div><div class="menu-item-price">590 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Death by Chocolate</div></div><div class="menu-item-price">400 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Molten Lava</div></div><div class="menu-item-price">690 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Three Milk Cake</div></div><div class="menu-item-price">490 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Fudge Brownie Sizzler</div></div><div class="menu-item-price">890 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Lotus Cheesecake</div></div><div class="menu-item-price">650 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chocolate Fudge</div></div><div class="menu-item-price">300 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">New York Cheesecake</div></div><div class="menu-item-price">850 Rs</div></div>
+      </div>
+    </div>
+    <div class="menu-category">
+      <div class="menu-category-title">☕ Bar & Drinks</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">Green Tea</div></div><div class="menu-item-price">150 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Mixed Tea</div></div><div class="menu-item-price">250 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Espresso</div></div><div class="menu-item-price">300 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Americano</div></div><div class="menu-item-price">450 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Cappuccino</div></div><div class="menu-item-price">500 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Caffe Latte</div></div><div class="menu-item-price">500 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Spanish Latte</div></div><div class="menu-item-price">540 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Saltish Caramel Latte</div></div><div class="menu-item-price">690 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Flavoured Coffees</div></div><div class="menu-item-price">690 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Hot Chocolate</div></div><div class="menu-item-price">500 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Caramel Hot Chocolate</div></div><div class="menu-item-price">590 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Vanilla Shake</div></div><div class="menu-item-price">480 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Strawberry Shake</div></div><div class="menu-item-price">450 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chocolate Shake</div></div><div class="menu-item-price">480 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Peanut Butter Shake</div></div><div class="menu-item-price">680 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Candy Shake</div></div><div class="menu-item-price">680 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Caramel Shake</div></div><div class="menu-item-price">800 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Lemonade</div></div><div class="menu-item-price">350 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Mint Margarita</div></div><div class="menu-item-price">390 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Italian Sodas</div></div><div class="menu-item-price">490 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Small Water</div></div><div class="menu-item-price">90 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Large Water</div></div><div class="menu-item-price">180 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Soft Drink (Local)</div></div><div class="menu-item-price">150 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Soft Drink (Can)</div></div><div class="menu-item-price">150 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Fresh Lime</div></div><div class="menu-item-price">250 Rs</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KIDS -->
+  <div class="menu-panel" id="panel-kids">
+    <div class="menu-category">
+      <div class="menu-category-title">👶 Kids Menu</div>
+      <div class="menu-items-grid">
+        <div class="menu-item"><div><div class="menu-item-name">French Fries</div></div><div class="menu-item-price">450 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Itsy Bitsy Chicken Bites</div></div><div class="menu-item-price">590 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Kiddie Burger</div></div><div class="menu-item-price">690 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chicken Strips</div></div><div class="menu-item-price">790 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Nestle Juices (Apple & Mango)</div></div><div class="menu-item-price">150 Rs</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Milo</div></div><div class="menu-item-price">190 Rs</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AFTER DARK DEALS -->
+<section id="deals" class="deals">
+  <div class="center">
+    <div class="section-tag">12:00 AM – 2:00 AM</div>
+    <div class="section-title">After Dark Menu 🌙</div>
+    <p class="section-sub" style="color:#888; margin:0 auto;">Midnight cravings, sorted. Exclusive late-night deals served only after midnight.</p>
+  </div>
+  <div class="deals-grid">
+    <div class="deal-card">
+      <div class="deal-badge">🍕 BOGO</div>
+      <h3>Midnight Pizza Madness</h3>
+      <p>Chicken Tikka · Ottimo Special · Creamy Ranch · Creamy Peri Peri — Buy One Get One Free on 10" pizzas</p>
+      <div><span class="deal-price">1,790–1,890 Rs</span></div>
+      <div class="deal-time">⏰ 12:00 AM – 2:00 AM only</div>
+    </div>
+    <div class="deal-card">
+      <div class="deal-badge">🌙 DEAL</div>
+      <h3>Moonlight Munch</h3>
+      <p>Nachos, Onion Rings, Sauce Dip, 250mL Drink</p>
+      <div><span class="deal-price">990 Rs</span><span class="deal-original">1,590 Rs</span></div>
+      <div class="deal-time">⏰ After Dark special</div>
+    </div>
+    <div class="deal-card">
+      <div class="deal-badge">🌯 SOLO</div>
+      <h3>Midnight Wrap</h3>
+      <p>Chicken Crunch Wrap, Fries, 250mL Drink — great for one</p>
+      <div><span class="deal-price">790 Rs</span><span class="deal-original">1,040 Rs</span></div>
+      <div class="deal-time">⏰ After Dark special</div>
+    </div>
+    <div class="deal-card">
+      <div class="deal-badge">🍟 BITES</div>
+      <h3>Loaded Bites</h3>
+      <p>Loaded Fries, 4 Wings, Sauce Dip, 250mL Drink</p>
+      <div><span class="deal-price">1,190 Rs</span><span class="deal-original">1,725 Rs</span></div>
+      <div class="deal-time">⏰ After Dark special</div>
+    </div>
+    <div class="deal-card">
+      <div class="deal-badge">🇮🇹 ITALIAN</div>
+      <h3>Notte Italiano</h3>
+      <p>Garlic Bread, Pasta Marengo, Fries, Drink, Dessert — Complete Italian meal</p>
+      <div><span class="deal-price">1,890 Rs</span></div>
+      <div class="deal-time">⏰ After Dark special</div>
+    </div>
+    <div class="deal-card">
+      <div class="deal-badge">🥢 CHINESE</div>
+      <h3>Shanghai Night Feast</h3>
+      <p>Chicken Dumplings, Egg Fried Rice, Chicken Chowmein, Beef Chilli Dry, Drink, Dessert</p>
+      <div><span class="deal-price">1,690 Rs</span></div>
+      <div class="deal-time">⏰ After Dark special</div>
+    </div>
+    <div class="deal-card">
+      <div class="deal-badge">🍔 DUO</div>
+      <h3>Blackout Chicken Duo</h3>
+      <p>Any 2 Chicken Burgers, Nachos, 500mL Drink</p>
+      <div><span class="deal-price">1,890 Rs</span><span class="deal-original">2,900 Rs</span></div>
+      <div class="deal-time">⏰ After Dark special</div>
+    </div>
+    <div class="deal-card">
+      <div class="deal-badge">🥩 DUO</div>
+      <h3>After Dark Beef Duo</h3>
+      <p>Any 2 Beef Burgers, Fries, Sauce Dip, 500mL Drink</p>
+      <div><span class="deal-price">2,190 Rs</span><span class="deal-original">2,980 Rs</span></div>
+      <div class="deal-time">⏰ After Dark special</div>
+    </div>
+    <div class="deal-card">
+      <div class="deal-badge">👥 QUAD</div>
+      <h3>Late Night Quad</h3>
+      <p>Any 4 Burgers, Large Fries, 2 Sauce Dips, 1.5L Drink — built for four</p>
+      <div><span class="deal-price">3,890 Rs</span><span class="deal-original">5,130 Rs</span></div>
+      <div class="deal-time">⏰ After Dark special</div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews" class="reviews">
+  <div class="center">
+    <div class="section-tag">What people say</div>
+    <div class="section-title">Loved Across Every Platform</div>
+  </div>
+  <div class="ratings-row">
+    <div class="rating-box"><div class="rating-num">4.9</div><div class="rating-src">Facebook</div><div class="rating-votes">35 votes</div></div>
+    <div class="rating-box"><div class="rating-num">4.5</div><div class="rating-src">Foodpanda</div><div class="rating-votes">90 votes</div></div>
+    <div class="rating-box"><div class="rating-num">4.2</div><div class="rating-src">Google</div><div class="rating-votes">Google reviews</div></div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Absolutely amazing experience. The food was authentic, the ambiance was perfect and the outdoor seating was a lovely touch. Will definitely be coming back!"</p>
+      <div class="reviewer"><div class="reviewer-avatar">AK</div><div><div class="reviewer-name">Ali Khan</div><div class="reviewer-source">Google Review</div></div></div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Best cafe in Hayatabad by far. The all you can eat buffet is incredible value and the variety is outstanding. Highly recommended for families and groups."</p>
+      <div class="reviewer"><div class="reviewer-avatar">SA</div><div><div class="reviewer-name">Sara Ahmad</div><div class="reviewer-source">Facebook Review</div></div></div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★½</div>
+      <p>"Loved the vegan options — finally a restaurant in Peshawar that takes plant-based food seriously. The drinks are amazing too. Great late night spot!"</p>
+      <div class="reviewer"><div class="reviewer-avatar">ZM</div><div><div class="reviewer-name">Zara Malik</div><div class="reviewer-source">Foodpanda Review</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="section-tag">Find us</div>
+  <div class="section-title">Visit Us or Make a Reservation</div>
+  <div class="contact-wrap">
+    <div class="info-card">
+      <div class="info-item"><div class="info-icon">📍</div><div><h4>Address</h4><p>Deans Heights, Phase 2 Hayatabad, Peshawar, 25000</p></div></div>
+      <div class="info-item"><div class="info-icon">📞</div><div><h4>Phone</h4><a href="tel:0913046913">(091) 3046913</a></div></div>
+      <div class="info-item"><div class="info-icon">📦</div><div><h4>Delivery & Takeaway</h4><a href="tel:03324046913">0332 4046913</a></div></div>
+      <div class="info-item"><div class="info-icon">🕐</div><div><h4>Hours</h4><p style="color:#fff;">Open 8am – 2am daily<br/><span style="color:#c9a84c; font-size:13px;">After Dark menu: 12am – 2am</span></p></div></div>
+      <div class="info-item"><div class="info-icon">📱</div><div><h4>Follow Us</h4><div class="social-row"><a href="https://www.instagram.com/cafeottimo.pk/" target="_blank" class="social-btn">Instagram</a><a href="https://www.facebook.com/cafeottimo.pk/" target="_blank" class="social-btn">Facebook</a><a href="https://www.foodpanda.pk/restaurant/vije/cafe-ottimo-vije" target="_blank" class="social-btn">Foodpanda</a></div></div></div>
+    </div>
+    <div>
+      <p style="font-size:15px; color:#555; margin-bottom:24px; line-height:1.7;">Book your table in advance — we'll confirm within the hour.</p>
+      <form class="reservation-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <input type="text" id="f-name" placeholder="Your name" required />
+          <input type="tel" id="f-phone" placeholder="Phone number" required />
+        </div>
+        <div class="form-row">
+          <input type="date" id="f-date" required />
+          <input type="time" id="f-time" required />
+        </div>
+        <select id="f-guests">
+          <option value="">Number of guests</option>
+          <option>1–2 guests</option>
+          <option>3–5 guests</option>
+          <option>6–10 guests</option>
+          <option>10+ guests</option>
+        </select>
+        <select id="f-seating">
+          <option value="">Seating preference</option>
+          <option>Indoor seating</option>
+          <option>Outdoor seating</option>
+          <option>No preference</option>
+        </select>
+        <textarea id="f-notes" placeholder="Any special requests..."></textarea>
+        <button type="submit">Reserve My Table</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Cafe Ottimo</div>
+    <p>© 2025 Cafe Ottimo. Deans Heights, Hayatabad, Peshawar.</p>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/cafeottimo.pk/" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/cafeottimo.pk/" target="_blank">Facebook</a>
+      <a href="https://www.foodpanda.pk/restaurant/vije/cafe-ottimo-vije" target="_blank">Foodpanda</a>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/923324046913" class="wa-float" target="_blank">💬</a>
+
+<script>
+  function showMenu(tab) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + tab).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('f-name').value;
+    const phone = document.getElementById('f-phone').value;
+    const date = document.getElementById('f-date').value;
+    const time = document.getElementById('f-time').value;
+    const guests = document.getElementById('f-guests').value;
+    const notes = document.getElementById('f-notes').value;
+    const msg = `New Reservation!%0A%0AName: ${name}%0APhone: ${phone}%0ADate: ${date}%0ATime: ${time}%0AGuests: ${guests}%0ANotes: ${notes}`;
+    window.open(`https://wa.me/923324046913?text=${msg}`, '_blank');
+    e.target.reset();
+  }
+
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.background =
+      window.scrollY > 60 ? 'rgba(10,8,5,0.99)' : 'rgba(10,8,5,0.96)';
+  });
+</script>
+</body>
+</html>
